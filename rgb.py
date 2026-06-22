@@ -382,6 +382,148 @@ class RgbTab(QWidget):
             self.separator()
         )
 
+                #
+        # ENERGIE
+        #
+
+        layout.addWidget(
+            QLabel(
+                "Energie"
+            )
+        )
+
+        energy_config = self.config.load()
+
+        #
+        # Dim Timer
+        #
+
+        dim_row = QHBoxLayout()
+
+        dim_label = QLabel(
+            "Dim Timer"
+        )
+
+        dim_label.setFixedWidth(
+            self.LABEL_WIDTH
+        )
+
+        self.dim_timer_field = QLineEdit(
+            str(
+                energy_config.get(
+                    "dim_timer",
+                    30
+                )
+            )
+        )
+
+        self.dim_timer_field.setFixedWidth(
+            self.FIELD_WIDTH
+        )
+
+        dim_row.addWidget(
+            dim_label
+        )
+
+        dim_row.addWidget(
+            self.dim_timer_field
+        )
+
+        dim_row.addWidget(
+            QLabel(
+                "Sekunden"
+            )
+        )
+
+        dim_row.addStretch()
+
+        layout.addLayout(
+            dim_row
+        )
+
+        #
+        # Sleep Timer
+        #
+
+        sleep_row = QHBoxLayout()
+
+        sleep_label = QLabel(
+            "Sleep Timer"
+        )
+
+        sleep_label.setFixedWidth(
+            self.LABEL_WIDTH
+        )
+
+        self.sleep_timer_field = QLineEdit(
+            str(
+                energy_config.get(
+                    "sleep_timer",
+                    5
+                )
+            )
+        )
+
+        self.sleep_timer_field.setFixedWidth(
+            self.FIELD_WIDTH
+        )
+
+        sleep_row.addWidget(
+            sleep_label
+        )
+
+        sleep_row.addWidget(
+            self.sleep_timer_field
+        )
+
+        sleep_row.addWidget(
+            QLabel(
+                "Minuten"
+            )
+        )
+
+        sleep_row.addStretch()
+
+        layout.addLayout(
+            sleep_row
+        )
+
+        #
+        # Energie speichern
+        #
+
+        energy_row = QHBoxLayout()
+
+        energy_button = QPushButton(
+            "Speichern"
+        )
+
+        energy_button.setFixedWidth(
+            self.BUTTON_WIDTH
+        )
+
+        energy_button.clicked.connect(
+            self.save_energy_settings
+        )
+
+        energy_row.addSpacing(
+            self.LABEL_WIDTH
+        )
+
+        energy_row.addWidget(
+            energy_button
+        )
+
+        energy_row.addStretch()
+
+        layout.addLayout(
+            energy_row
+        )
+
+        layout.addWidget(
+            self.separator()
+        )
+
         #
         # RGB AUS
         #
@@ -613,7 +755,60 @@ class RgbTab(QWidget):
             self.main_window.log(
                 f"[ERROR] {e}"
             )
+    def save_energy_settings(self):
 
+        try:
+
+            dim_timer = int(
+                self.dim_timer_field.text()
+            )
+
+            sleep_timer = int(
+                self.sleep_timer_field.text()
+            )
+
+            if dim_timer < 0 or dim_timer > 1200:
+
+                raise ValueError(
+                    "Dim Timer muss zwischen 0 und 1200 Sekunden liegen"
+                )
+
+            if sleep_timer < 0 or sleep_timer > 20:
+
+                raise ValueError(
+                    "Sleep Timer muss zwischen 0 und 20 Minuten liegen"
+                )
+
+            self.rivalcfg.set_dim_timer(
+                dim_timer
+            )
+
+            self.rivalcfg.set_sleep_timer(
+                sleep_timer
+            )
+
+            config = self.config.load()
+
+            config["dim_timer"] = dim_timer
+            config["sleep_timer"] = sleep_timer
+
+            self.config.save(
+                config
+            )
+
+            self.main_window.log(
+                f"[INFO] Dim Timer: {dim_timer} Sekunden"
+            )
+
+            self.main_window.log(
+                f"[INFO] Sleep Timer: {sleep_timer} Minuten"
+            )
+
+        except Exception as e:
+
+            self.main_window.log(
+                f"[ERROR] {e}"
+            )
     def disable_rgb(self):
 
         try:
