@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=GUI4RivalCfg
+Comment=SteelSeries GUI für rivalcfg
+Exec=/home/DEINNAME/gui4rivalcfg/gui4rivalcfg.sh
+Icon=utilities-terminal
+Terminal=false
+Categories=Utility;
