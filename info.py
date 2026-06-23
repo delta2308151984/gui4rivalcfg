@@ -2,7 +2,8 @@ from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
     QLabel,
-    QPushButton
+    QPushButton,
+    QFrame
 )
 
 from rivalcfg_wrapper import RivalCfg
@@ -52,8 +53,72 @@ class InfoTab(QWidget):
             self.refresh_battery
         )
 
+        layout.addSpacing(
+            10
+        )
+
         layout.addWidget(
             self.refresh_button
+        )
+
+        #
+        # About
+        #
+
+        layout.addSpacing(
+            10
+        )
+
+        line = QFrame()
+
+        line.setFrameShape(
+            QFrame.HLine
+        )
+
+        layout.addWidget(
+            line
+        )
+
+        layout.addSpacing(
+            60
+        )
+
+        layout.addWidget(
+            QLabel(
+                "GUI4RivalCfg v1.0"
+            )
+        )
+
+        layout.addSpacing(
+            30
+        )
+
+        layout.addWidget(
+            QLabel(
+                "Autor:"
+            )
+        )
+
+        layout.addWidget(
+            QLabel(
+                "delta2308151984"
+            )
+        )
+
+        layout.addSpacing(
+            10
+        )
+
+        layout.addWidget(
+            QLabel(
+                "GitHub:"
+            )
+        )
+
+        layout.addWidget(
+            QLabel(
+                "github.com/delta2308151984/gui4rivalcfg"
+            )
         )
 
         layout.addStretch()

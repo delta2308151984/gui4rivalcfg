@@ -1,14 +1,20 @@
+#!/usr/bin/env python3
 import sys
 
 from PySide6.QtWidgets import (
     QApplication,
     QWidget,
     QVBoxLayout,
+    QHBoxLayout,
     QTextEdit,
     QTabWidget,
-    QMessageBox
+    QMessageBox,
+    QLabel
 )
-
+from PySide6.QtGui import (
+    QIcon,
+    QPixmap
+)
 from theme import apply_dark_theme
 from device_detector import DeviceDetector
 
@@ -32,9 +38,15 @@ class MainWindow(QWidget):
             "GUI4RivalCfg"
         )
 
+        self.setWindowIcon(
+            QIcon(
+                "images/logo_clean.png"
+            )
+        )
+
         self.resize(
-            1000,
-            750
+            600,
+            600
         )
 
         self.build_ui()
@@ -125,8 +137,10 @@ class MainWindow(QWidget):
         )
 
         #
-        # Logbox
+        # Logbox + Logo
         #
+
+        bottom_row = QHBoxLayout()
 
         self.logbox = QTextEdit()
 
@@ -138,8 +152,30 @@ class MainWindow(QWidget):
             120
         )
 
-        layout.addWidget(
-            self.logbox
+        bottom_row.addWidget(
+            self.logbox,
+            1
+        )
+
+        logo_label = QLabel()
+
+        pixmap = QPixmap(
+            "images/logo.png"
+        )
+
+        logo_label.setPixmap(
+            pixmap.scaled(
+                160,
+                160
+            )
+        )
+
+        bottom_row.addWidget(
+            logo_label
+        )
+
+        layout.addLayout(
+            bottom_row
         )
 
         #
@@ -168,6 +204,12 @@ def main():
 
     app = QApplication(
         sys.argv
+    )
+
+    app.setWindowIcon(
+        QIcon(
+            "images/logo_clean.png"
+        )
     )
 
     apply_dark_theme(
