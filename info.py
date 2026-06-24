@@ -154,7 +154,7 @@ class InfoTab(QWidget):
 
         layout.addStretch()
 
-        self.update_language()
+
 
     def change_language(self):
 
@@ -166,6 +166,8 @@ class InfoTab(QWidget):
         set_language(
             lang
         )
+
+        self.main_window.update_language()
 
         self.main_window.log(
             f"[INFO] Sprache geändert: {lang}"

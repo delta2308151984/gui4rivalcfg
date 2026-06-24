@@ -558,6 +558,10 @@ class RgbTab(QWidget):
 
         layout.addStretch()
 
+    def update_language(self):
+
+        pass
+
     def separator(self):
 
         line = QFrame()

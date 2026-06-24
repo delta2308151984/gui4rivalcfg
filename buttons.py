@@ -232,6 +232,10 @@ class ButtonsTab(QWidget):
 
         return mapping
 
+    def update_language(self):
+
+        pass
+
     def save_buttons(self):
 
         try:

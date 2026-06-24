@@ -71,13 +71,13 @@ class MainWindow(QWidget):
 
         if parsed.get("dpi"):
 
-            dpi_tab = DpiTab(
+            self.dpi_tab = DpiTab(
                 parsed["dpi"],
                 self
             )
 
             self.tabs.addTab(
-                dpi_tab,
+                self.dpi_tab,
                 tr("tab_dpi")
             )
 
@@ -85,7 +85,7 @@ class MainWindow(QWidget):
         # RGB
         #
 
-        rgb_tab = RgbTab(
+        self.rgb_tab = RgbTab(
             parsed.get(
                 "rgb_zones",
                 []
@@ -98,7 +98,7 @@ class MainWindow(QWidget):
         )
 
         self.tabs.addTab(
-            rgb_tab,
+            self.rgb_tab,
             tr("tab_rgb")
         )
 
@@ -108,13 +108,13 @@ class MainWindow(QWidget):
 
         if parsed.get("buttons"):
 
-            buttons_tab = ButtonsTab(
+            self.buttons_tab = ButtonsTab(
                 parsed["buttons"],
                 self
             )
 
             self.tabs.addTab(
-                buttons_tab,
+                self.buttons_tab,
                 tr("tab_buttons")
             )
 
@@ -122,13 +122,13 @@ class MainWindow(QWidget):
         # Info
         #
 
-        info_tab = InfoTab(
+        self.info_tab = InfoTab(
             self.device_info,
             self
         )
 
         self.tabs.addTab(
-            info_tab,
+            self.info_tab,
             tr("tab_info")
         )
 
@@ -188,6 +188,57 @@ class MainWindow(QWidget):
 
         self.log(
             f"[INFO] rivalcfg Version: {self.device_info['rivalcfg_version']}"
+        )
+
+    def update_language(self):
+
+        index = 0
+
+        if hasattr(
+            self,
+            "dpi_tab"
+        ):
+
+            self.tabs.setTabText(
+                index,
+                tr("tab_dpi")
+            )
+
+            self.dpi_tab.update_language()
+
+            index += 1
+
+        self.tabs.setTabText(
+            index,
+            tr("tab_rgb")
+        )
+
+        if hasattr(
+            self,
+            "rgb_tab"
+        ):
+
+            self.rgb_tab.update_language()
+
+        index += 1
+
+        if hasattr(
+            self,
+            "buttons_tab"
+        ):
+
+            self.tabs.setTabText(
+                index,
+                tr("tab_buttons")
+            )
+
+            self.buttons_tab.update_language()
+
+            index += 1
+
+        self.tabs.setTabText(
+            index,
+            tr("tab_info")
         )
 
     def log(
