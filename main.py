@@ -22,7 +22,7 @@ from dpi import DpiTab
 from rgb import RgbTab
 from buttons import ButtonsTab
 from info import InfoTab
-
+from language import tr
 
 class MainWindow(QWidget):
 
@@ -78,7 +78,7 @@ class MainWindow(QWidget):
 
             self.tabs.addTab(
                 dpi_tab,
-                "DPI"
+                tr("tab_dpi")
             )
 
         #
@@ -99,7 +99,7 @@ class MainWindow(QWidget):
 
         self.tabs.addTab(
             rgb_tab,
-            "RGB"
+            tr("tab_rgb")
         )
 
         #
@@ -115,7 +115,7 @@ class MainWindow(QWidget):
 
             self.tabs.addTab(
                 buttons_tab,
-                "Buttons"
+                tr("tab_buttons")
             )
 
         #
@@ -129,7 +129,7 @@ class MainWindow(QWidget):
 
         self.tabs.addTab(
             info_tab,
-            "Info"
+            tr("tab_info")
         )
 
         layout.addWidget(

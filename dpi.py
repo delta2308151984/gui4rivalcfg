@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
 
 from config_manager import ConfigManager
 from rivalcfg_wrapper import RivalCfg
-
+from language import tr
 
 class DpiTab(QWidget):
 
@@ -119,7 +119,7 @@ class DpiTab(QWidget):
         layout.addStretch()
 
         self.save_button = QPushButton(
-            "Speichern"
+            tr("save")
         )
 
         self.save_button.clicked.connect(
@@ -128,6 +128,14 @@ class DpiTab(QWidget):
 
         layout.addWidget(
             self.save_button
+        )
+
+        self.update_language()
+
+    def update_language(self):
+
+        self.save_button.setText(
+            tr("save")
         )
 
     def get_selected_dpi(self):
@@ -176,11 +184,11 @@ class DpiTab(QWidget):
             )
 
             self.main_window.log(
-                f"[INFO] DPI gespeichert und auf Maus geschrieben: {dpi_values}"
+                f"[INFO] {tr('dpi_saved')}: {dpi_values}"
             )
 
         except Exception as e:
 
             self.main_window.log(
-                f"[ERROR] DPI konnte nicht geschrieben werden: {e}"
+                f"[ERROR] {tr('dpi_write_error')}: {e}"
             )
