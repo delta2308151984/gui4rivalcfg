@@ -1,10 +1,24 @@
-LANG = "en"
+from config_manager import ConfigManager
+config = ConfigManager().load()
+
+LANG = config.get(
+    "language",
+    "en"
+)
 
 def set_language(lang):
 
     global LANG
 
     LANG = lang
+
+    config = ConfigManager().load()
+
+    config["language"] = lang
+
+    ConfigManager().save(
+        config
+    )
 
 def get_language():
 
