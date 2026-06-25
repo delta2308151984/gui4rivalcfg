@@ -11,7 +11,7 @@ from PySide6.QtWidgets import (
 
 from config_manager import ConfigManager
 from rivalcfg_wrapper import RivalCfg
-
+from language import tr
 
 class RgbTab(QWidget):
 
@@ -67,8 +67,40 @@ class RgbTab(QWidget):
             {}
         )
 
+        self.build_rgb_section(
+            layout,
+            rgb_values
+        )
+
+        self.build_reactive_section(
+            layout,
+            effect_values
+        )
+
+        self.build_rainbow_section(
+            layout
+        )
+
+        self.build_energy_section(
+            layout
+        )
+
+        self.build_disable_section(
+            layout
+        )
+
+        layout.addStretch()
+
+        self.update_language()
+
+    def build_rgb_section(
+        self,
+        layout,
+        rgb_values
+    ):
+
         #
-        # RGB ZONEN
+        # RGB Zonen
         #
 
         for zone in self.zones:
@@ -151,15 +183,9 @@ class RgbTab(QWidget):
                 row
             )
 
-        #
-        # RGB SPEICHERN
-        #
-
         save_row = QHBoxLayout()
 
-        self.save_button = QPushButton(
-            "RGB speichern"
-        )
+        self.save_button = QPushButton()
 
         self.save_button.setFixedWidth(
             self.BUTTON_WIDTH
@@ -187,212 +213,206 @@ class RgbTab(QWidget):
             self.separator()
         )
 
-        #
-        # REACTIVE
-        #
+    def build_reactive_section(
+        self,
+        layout,
+        effect_values
+    ):
 
-        if self.effects.get(
+        if not self.effects.get(
             "reactive",
             False
         ):
+            return
 
-            reactive_color = (
-                effect_values.get(
-                    "reactive_color",
-                    "FF0000"
-                )
-            )
+        reactive_color = effect_values.get(
+            "reactive_color",
+            "FF0000"
+        )
 
-            row = QHBoxLayout()
+        row = QHBoxLayout()
 
-            label = QLabel(
-                "Reactive"
-            )
+        self.reactive_label = QLabel()
 
-            label.setFixedWidth(
-                self.LABEL_WIDTH
-            )
+        self.reactive_label.setFixedWidth(
+            self.LABEL_WIDTH
+        )
 
-            self.reactive_field = QLineEdit(
-                reactive_color
-            )
+        self.reactive_field = QLineEdit(
+            reactive_color
+        )
 
-            self.reactive_field.setFixedWidth(
-                self.FIELD_WIDTH
-            )
+        self.reactive_field.setFixedWidth(
+            self.FIELD_WIDTH
+        )
 
-            self.reactive_field.setMaxLength(
-                6
-            )
+        self.reactive_field.setMaxLength(
+            6
+        )
 
-            picker = QPushButton(
-                "🎨"
-            )
+        picker = QPushButton(
+            "🎨"
+        )
 
-            picker.setFixedWidth(
-                self.PICKER_WIDTH
-            )
+        picker.setFixedWidth(
+            self.PICKER_WIDTH
+        )
 
-            picker.clicked.connect(
-                self.pick_reactive_color
-            )
+        picker.clicked.connect(
+            self.pick_reactive_color
+        )
 
-            self.reactive_preview = QLabel()
+        self.reactive_preview = QLabel()
 
-            self.reactive_preview.setFixedSize(
-                self.PREVIEW_WIDTH,
-                20
-            )
+        self.reactive_preview.setFixedSize(
+            self.PREVIEW_WIDTH,
+            20
+        )
 
-            self.reactive_preview.setStyleSheet(
-                f"""
-                background-color: #{reactive_color};
-                border: 1px solid gray;
-                """
-            )
+        self.reactive_preview.setStyleSheet(
+            f"""
+            background-color: #{reactive_color};
+            border: 1px solid gray;
+            """
+        )
 
-            row.addWidget(label)
+        row.addWidget(
+            self.reactive_label
+        )
 
-            row.addWidget(
-                self.reactive_field
-            )
+        row.addWidget(
+            self.reactive_field
+        )
 
-            row.addWidget(
-                picker
-            )
+        row.addWidget(
+            picker
+        )
 
-            row.addWidget(
-                self.reactive_preview
-            )
+        row.addWidget(
+            self.reactive_preview
+        )
 
-            row.addStretch()
+        row.addStretch()
 
-            layout.addLayout(
-                row
-            )
+        layout.addLayout(
+            row
+        )
 
-            button_row = QHBoxLayout()
+        button_row = QHBoxLayout()
 
-            reactive_on = QPushButton(
-                "Aktivieren"
-            )
+        self.reactive_on = QPushButton()
+        self.reactive_off = QPushButton()
 
-            reactive_off = QPushButton(
-                "Deaktivieren"
-            )
+        self.reactive_on.setFixedWidth(
+            self.BUTTON_WIDTH
+        )
 
-            reactive_on.setFixedWidth(
-                self.BUTTON_WIDTH
-            )
+        self.reactive_off.setFixedWidth(
+            self.BUTTON_WIDTH
+        )
 
-            reactive_off.setFixedWidth(
-                self.BUTTON_WIDTH
-            )
+        self.reactive_on.clicked.connect(
+            self.enable_reactive
+        )
 
-            reactive_on.clicked.connect(
-                self.enable_reactive
-            )
+        self.reactive_off.clicked.connect(
+            self.disable_reactive
+        )
 
-            reactive_off.clicked.connect(
-                self.disable_reactive
-            )
+        button_row.addSpacing(
+            self.LABEL_WIDTH
+        )
 
-            button_row.addSpacing(
-                self.LABEL_WIDTH
-            )
+        button_row.addWidget(
+            self.reactive_on
+        )
 
-            button_row.addWidget(
-                reactive_on
-            )
+        button_row.addWidget(
+            self.reactive_off
+        )
 
-            button_row.addWidget(
-                reactive_off
-            )
+        button_row.addStretch()
 
-            button_row.addStretch()
-
-            layout.addLayout(
-                button_row
-            )
+        layout.addLayout(
+            button_row
+        )
 
         layout.addWidget(
             self.separator()
         )
 
-        #
-        # RAINBOW
-        #
+    def build_rainbow_section(
+        self,
+        layout
+    ):
 
-        if self.effects.get(
+        if not self.effects.get(
             "rainbow",
             False
         ):
+            return
 
-            layout.addWidget(
-                QLabel(
-                    "Rainbow"
-                )
-            )
+        self.rainbow_label = QLabel()
 
-            rainbow_row = QHBoxLayout()
+        layout.addWidget(
+            self.rainbow_label
+        )
 
-            self.rainbow_on = QPushButton(
-                "Aktivieren"
-            )
+        rainbow_row = QHBoxLayout()
 
-            self.rainbow_off = QPushButton(
-                "Deaktivieren"
-            )
+        self.rainbow_on = QPushButton()
+        self.rainbow_off = QPushButton()
 
-            self.rainbow_on.setFixedWidth(
-                self.BUTTON_WIDTH
-            )
+        self.rainbow_on.setFixedWidth(
+            self.BUTTON_WIDTH
+        )
 
-            self.rainbow_off.setFixedWidth(
-                self.BUTTON_WIDTH
-            )
+        self.rainbow_off.setFixedWidth(
+            self.BUTTON_WIDTH
+        )
 
-            self.rainbow_on.clicked.connect(
-                self.enable_rainbow
-            )
+        self.rainbow_on.clicked.connect(
+            self.enable_rainbow
+        )
 
-            self.rainbow_off.clicked.connect(
-                self.disable_rainbow
-            )
+        self.rainbow_off.clicked.connect(
+            self.disable_rainbow
+        )
 
-            rainbow_row.addSpacing(
-                self.LABEL_WIDTH
-            )
+        rainbow_row.addSpacing(
+            self.LABEL_WIDTH
+        )
 
-            rainbow_row.addWidget(
-                self.rainbow_on
-            )
+        rainbow_row.addWidget(
+            self.rainbow_on
+        )
 
-            rainbow_row.addWidget(
-                self.rainbow_off
-            )
+        rainbow_row.addWidget(
+            self.rainbow_off
+        )
 
-            rainbow_row.addStretch()
+        rainbow_row.addStretch()
 
-            layout.addLayout(
-                rainbow_row
-            )
+        layout.addLayout(
+            rainbow_row
+        )
 
         layout.addWidget(
             self.separator()
         )
 
-                #
-        # ENERGIE
-        #
+    def build_energy_section(
+        self,
+        layout
+    ):
+
+        self.energy_label = QLabel()
 
         layout.addWidget(
-            QLabel(
-                "Energie"
-            )
+            self.energy_label
         )
 
-        energy_config = self.config.load()
+        config = self.config.load()
 
         #
         # Dim Timer
@@ -400,17 +420,15 @@ class RgbTab(QWidget):
 
         dim_row = QHBoxLayout()
 
-        dim_label = QLabel(
-            "Dim Timer"
-        )
+        self.dim_label = QLabel()
 
-        dim_label.setFixedWidth(
+        self.dim_label.setFixedWidth(
             self.LABEL_WIDTH
         )
 
         self.dim_timer_field = QLineEdit(
             str(
-                energy_config.get(
+                config.get(
                     "dim_timer",
                     30
                 )
@@ -421,8 +439,10 @@ class RgbTab(QWidget):
             self.FIELD_WIDTH
         )
 
+        self.seconds_label = QLabel()
+
         dim_row.addWidget(
-            dim_label
+            self.dim_label
         )
 
         dim_row.addWidget(
@@ -430,9 +450,7 @@ class RgbTab(QWidget):
         )
 
         dim_row.addWidget(
-            QLabel(
-                "Sekunden"
-            )
+            self.seconds_label
         )
 
         dim_row.addStretch()
@@ -447,17 +465,15 @@ class RgbTab(QWidget):
 
         sleep_row = QHBoxLayout()
 
-        sleep_label = QLabel(
-            "Sleep Timer"
-        )
+        self.sleep_label = QLabel()
 
-        sleep_label.setFixedWidth(
+        self.sleep_label.setFixedWidth(
             self.LABEL_WIDTH
         )
 
         self.sleep_timer_field = QLineEdit(
             str(
-                energy_config.get(
+                config.get(
                     "sleep_timer",
                     5
                 )
@@ -468,8 +484,10 @@ class RgbTab(QWidget):
             self.FIELD_WIDTH
         )
 
+        self.minutes_label = QLabel()
+
         sleep_row.addWidget(
-            sleep_label
+            self.sleep_label
         )
 
         sleep_row.addWidget(
@@ -477,9 +495,7 @@ class RgbTab(QWidget):
         )
 
         sleep_row.addWidget(
-            QLabel(
-                "Minuten"
-            )
+            self.minutes_label
         )
 
         sleep_row.addStretch()
@@ -488,21 +504,15 @@ class RgbTab(QWidget):
             sleep_row
         )
 
-        #
-        # Energie speichern
-        #
-
         energy_row = QHBoxLayout()
 
-        energy_button = QPushButton(
-            "Speichern"
-        )
+        self.energy_button = QPushButton()
 
-        energy_button.setFixedWidth(
+        self.energy_button.setFixedWidth(
             self.BUTTON_WIDTH
         )
 
-        energy_button.clicked.connect(
+        self.energy_button.clicked.connect(
             self.save_energy_settings
         )
 
@@ -511,7 +521,7 @@ class RgbTab(QWidget):
         )
 
         energy_row.addWidget(
-            energy_button
+            self.energy_button
         )
 
         energy_row.addStretch()
@@ -524,15 +534,14 @@ class RgbTab(QWidget):
             self.separator()
         )
 
-        #
-        # RGB AUS
-        #
+    def build_disable_section(
+        self,
+        layout
+    ):
 
         off_row = QHBoxLayout()
 
-        self.rgb_off_button = QPushButton(
-            "RGB deaktivieren"
-        )
+        self.rgb_off_button = QPushButton()
 
         self.rgb_off_button.setFixedWidth(
             self.BUTTON_WIDTH
@@ -556,11 +565,84 @@ class RgbTab(QWidget):
             off_row
         )
 
-        layout.addStretch()
-
     def update_language(self):
 
-        pass
+        self.save_button.setText(
+            tr("rgb_save")
+        )
+
+        self.rgb_off_button.setText(
+            tr("rgb_disable")
+        )
+
+        self.energy_label.setText(
+            tr("energy")
+        )
+
+        self.dim_label.setText(
+            tr("dim_timer")
+        )
+
+        self.sleep_label.setText(
+            tr("sleep_timer")
+        )
+
+        self.seconds_label.setText(
+            tr("seconds")
+        )
+
+        self.minutes_label.setText(
+            tr("minutes")
+        )
+
+        self.energy_button.setText(
+            tr("save")
+        )
+
+        if hasattr(
+            self,
+            "reactive_label"
+        ):
+
+            self.reactive_label.setText(
+                tr("reactive")
+            )
+
+        if hasattr(
+            self,
+            "rainbow_label"
+        ):
+
+            self.rainbow_label.setText(
+                tr("rainbow")
+            )
+
+        if hasattr(
+            self,
+            "reactive_on"
+        ):
+
+            self.reactive_on.setText(
+                tr("enable")
+            )
+
+            self.reactive_off.setText(
+                tr("disable")
+            )
+
+        if hasattr(
+            self,
+            "rainbow_on"
+        ):
+
+            self.rainbow_on.setText(
+                tr("enable")
+            )
+
+            self.rainbow_off.setText(
+                tr("disable")
+            )
+
 
     def separator(self):
 
@@ -674,7 +756,7 @@ class RgbTab(QWidget):
             )
 
             self.main_window.log(
-                "[INFO] RGB gespeichert"
+                f"[INFO] {tr('rgb_saved')}"
             )
 
         except Exception as e:
@@ -682,6 +764,7 @@ class RgbTab(QWidget):
             self.main_window.log(
                 f"[ERROR] {e}"
             )
+
 
     def enable_reactive(self):
 
@@ -698,7 +781,7 @@ class RgbTab(QWidget):
             )
 
             self.main_window.log(
-                "[INFO] Reactive aktiviert"
+                f"[INFO] {tr('reactive_enabled')}"
             )
 
         except Exception as e:
@@ -706,6 +789,7 @@ class RgbTab(QWidget):
             self.main_window.log(
                 f"[ERROR] {e}"
             )
+
 
     def disable_reactive(self):
 
@@ -714,7 +798,7 @@ class RgbTab(QWidget):
             self.rivalcfg.disable_reactive()
 
             self.main_window.log(
-                "[INFO] Reactive deaktiviert"
+                f"[INFO] {tr('reactive_disabled')}"
             )
 
         except Exception as e:
@@ -722,6 +806,7 @@ class RgbTab(QWidget):
             self.main_window.log(
                 f"[ERROR] {e}"
             )
+
 
     def enable_rainbow(self):
 
@@ -735,7 +820,7 @@ class RgbTab(QWidget):
             self.rivalcfg.enable_rainbow()
 
             self.main_window.log(
-                "[INFO] Rainbow aktiviert"
+                f"[INFO] {tr('rainbow_enabled')}"
             )
 
         except Exception as e:
@@ -743,6 +828,7 @@ class RgbTab(QWidget):
             self.main_window.log(
                 f"[ERROR] {e}"
             )
+
 
     def disable_rainbow(self):
 
@@ -751,7 +837,7 @@ class RgbTab(QWidget):
             self.rivalcfg.disable_rainbow()
 
             self.main_window.log(
-                "[INFO] Rainbow deaktiviert"
+                f"[INFO] {tr('rainbow_disabled')}"
             )
 
         except Exception as e:
@@ -759,6 +845,7 @@ class RgbTab(QWidget):
             self.main_window.log(
                 f"[ERROR] {e}"
             )
+
     def save_energy_settings(self):
 
         try:
@@ -771,16 +858,16 @@ class RgbTab(QWidget):
                 self.sleep_timer_field.text()
             )
 
-            if dim_timer < 0 or dim_timer > 1200:
+            if not 0 <= dim_timer <= 1200:
 
                 raise ValueError(
-                    "Dim Timer muss zwischen 0 und 1200 Sekunden liegen"
+                    tr("dim_timer_invalid")
                 )
 
-            if sleep_timer < 0 or sleep_timer > 20:
+            if not 0 <= sleep_timer <= 20:
 
                 raise ValueError(
-                    "Sleep Timer muss zwischen 0 und 20 Minuten liegen"
+                    tr("sleep_timer_invalid")
                 )
 
             self.rivalcfg.set_dim_timer(
@@ -801,11 +888,7 @@ class RgbTab(QWidget):
             )
 
             self.main_window.log(
-                f"[INFO] Dim Timer: {dim_timer} Sekunden"
-            )
-
-            self.main_window.log(
-                f"[INFO] Sleep Timer: {sleep_timer} Minuten"
+                f"[INFO] {tr('energy_saved')}"
             )
 
         except Exception as e:
@@ -813,6 +896,7 @@ class RgbTab(QWidget):
             self.main_window.log(
                 f"[ERROR] {e}"
             )
+
     def disable_rgb(self):
 
         try:
@@ -820,7 +904,7 @@ class RgbTab(QWidget):
             self.rivalcfg.disable_rgb()
 
             self.main_window.log(
-                "[INFO] RGB deaktiviert"
+                f"[INFO] {tr('rgb_disabled')}"
             )
 
         except Exception as e:
@@ -828,3 +912,5 @@ class RgbTab(QWidget):
             self.main_window.log(
                 f"[ERROR] {e}"
             )
+
+
