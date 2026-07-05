@@ -107,9 +107,12 @@ class RgbTab(QWidget):
 
             row = QHBoxLayout()
 
-            label = QLabel(
-                zone.capitalize()
-            )
+            label = QLabel()
+            label.setText(tr(f"zone_{zone}"))
+            label.setProperty("zone", zone)
+            if not hasattr(self, "zone_labels"):
+                self.zone_labels = []
+            self.zone_labels.append(label)
 
             label.setFixedWidth(
                 self.LABEL_WIDTH
@@ -567,6 +570,11 @@ class RgbTab(QWidget):
 
     def update_language(self):
 
+        for label in getattr(self, "zone_labels", []):
+            label.setText(
+                tr(f"zone_{label.property('zone')}")
+            )
+
         self.save_button.setText(
             tr("rgb_save")
         )
@@ -912,5 +920,4 @@ class RgbTab(QWidget):
             self.main_window.log(
                 f"[ERROR] {e}"
             )
-
 

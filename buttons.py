@@ -10,12 +10,13 @@ from PySide6.QtWidgets import (
 
 from config_manager import ConfigManager
 from rivalcfg_wrapper import RivalCfg
+from language import get_language, tr
 
 from button_mappings import (
     BUTTON_VALUES,
     DEFAULT_MAPPING,
-    DISPLAY_NAMES,
-    PHYSICAL_BUTTON_NAMES
+    display_name,
+    physical_button_name
 )
 
 
@@ -43,6 +44,7 @@ class ButtonsTab(QWidget):
         self.rivalcfg = RivalCfg()
 
         self.combos = {}
+        self.labels = {}
 
         self.build_ui()
 
@@ -85,10 +87,7 @@ class ButtonsTab(QWidget):
             row = QHBoxLayout()
 
             label = QLabel(
-                PHYSICAL_BUTTON_NAMES.get(
-                    button_name,
-                    button_name
-                )
+                physical_button_name(button_name, get_language())
             )
 
             label.setFixedWidth(
@@ -104,10 +103,7 @@ class ButtonsTab(QWidget):
             for value in BUTTON_VALUES:
 
                 display = (
-                    DISPLAY_NAMES.get(
-                        value,
-                        value
-                    )
+                    display_name(value, get_language())
                 )
 
                 combo.addItem(
@@ -139,6 +135,10 @@ class ButtonsTab(QWidget):
                 button_name
             ] = combo
 
+            self.labels[
+                button_name
+            ] = label
+
             row.addWidget(
                 label
             )
@@ -160,7 +160,7 @@ class ButtonsTab(QWidget):
         save_row = QHBoxLayout()
 
         self.save_button = QPushButton(
-            "Buttons speichern"
+            tr("buttons_save")
         )
 
         self.save_button.setFixedWidth(
@@ -233,8 +233,24 @@ class ButtonsTab(QWidget):
         return mapping
 
     def update_language(self):
+        language = get_language()
 
-        pass
+        self.save_button.setText(
+            tr("buttons_save")
+        )
+
+        for button_name, label in self.labels.items():
+            label.setText(
+                physical_button_name(button_name, language)
+            )
+
+        for combo in self.combos.values():
+            for index in range(combo.count()):
+                value = combo.itemData(index)
+                combo.setItemText(
+                    index,
+                    display_name(value, language)
+                )
 
     def save_buttons(self):
 
@@ -268,7 +284,7 @@ class ButtonsTab(QWidget):
             )
 
             self.main_window.log(
-                "[INFO] Buttons gespeichert"
+                f"[INFO] {tr('buttons_saved')}"
             )
 
             self.main_window.log(

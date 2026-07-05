@@ -22,6 +22,7 @@ from dpi import DpiTab
 from rgb import RgbTab
 from buttons import ButtonsTab
 from info import InfoTab
+from language_tab import LanguageTab
 from language import tr
 
 class MainWindow(QWidget):
@@ -132,6 +133,13 @@ class MainWindow(QWidget):
             tr("tab_info")
         )
 
+        self.language_tab = LanguageTab(self)
+
+        self.tabs.addTab(
+            self.language_tab,
+            tr("tab_language")
+        )
+
         layout.addWidget(
             self.tabs
         )
@@ -183,7 +191,7 @@ class MainWindow(QWidget):
         #
 
         self.log(
-            f"[INFO] Gerät erkannt: {self.device_info['device']}"
+            f"[INFO] {tr('device_detected')}: {self.device_info['device']}"
         )
 
         self.log(
@@ -241,6 +249,16 @@ class MainWindow(QWidget):
             tr("tab_info")
         )
 
+        index += 1
+
+        self.tabs.setTabText(
+            index,
+            tr("tab_language")
+        )
+
+        self.info_tab.update_language()
+        self.language_tab.update_language()
+
     def log(
         self,
         text
@@ -281,7 +299,7 @@ def main():
 
         QMessageBox.critical(
             None,
-            "Fehler",
+            tr("error"),
             str(e)
         )
 

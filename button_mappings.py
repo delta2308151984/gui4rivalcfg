@@ -244,3 +244,73 @@ DISPLAY_NAMES = {
     "Tab": "Tabulator",
     "Backspace": "Backspace"
 }
+
+
+PHYSICAL_BUTTON_NAMES_EN = {
+    "button1": "Left click",
+    "button2": "Right click",
+    "button3": "Middle click",
+    "button4": "Side button Back",
+    "button5": "Side button Forward",
+    "button6": "DPI button",
+    "button7": "Upper thumb button",
+    "button8": "Middle thumb button",
+    "button9": "Lower thumb button"
+}
+
+
+DISPLAY_NAMES_EN = {
+    "button1": "Left click",
+    "button2": "Right click",
+    "button3": "Middle click",
+    "button4": "Side button Back",
+    "button5": "Side button Forward",
+    "button6": "DPI button",
+    "button7": "Upper thumb button",
+    "button8": "Middle thumb button",
+    "button9": "Lower thumb button",
+    "dpi": "Cycle DPI",
+    "disabled": "Disabled",
+    "ScrollUp": "Scroll up",
+    "ScrollDown": "Scroll down",
+    "Mute": "Mute",
+    "PlayPause": "Play / Pause",
+    "Next": "Next track",
+    "Previous": "Previous track",
+    "VolumeUp": "Volume up",
+    "VolumeDown": "Volume down",
+    "PageUp": "Page Up",
+    "PageDown": "Page Down",
+    "Home": "Home",
+    "End": "End",
+    "Insert": "Insert",
+    "Delete": "Delete",
+    "Up": "Arrow Up",
+    "Down": "Arrow Down",
+    "Left": "Arrow Left",
+    "Right": "Arrow Right",
+    "Ctrl": "Ctrl",
+    "Alt": "Alt",
+    "Shift": "Shift",
+    "LeftCtrl": "Left Ctrl",
+    "RightCtrl": "Right Ctrl",
+    "LeftAlt": "Left Alt",
+    "RightAlt": "Right Alt",
+    "LeftShift": "Left Shift",
+    "RightShift": "Right Shift",
+    "Enter": "Enter",
+    "Escape": "Escape",
+    "Space": "Space",
+    "Tab": "Tab",
+    "Backspace": "Backspace"
+}
+
+
+def physical_button_name(value, language="de"):
+    names = PHYSICAL_BUTTON_NAMES_EN if language == "en" else PHYSICAL_BUTTON_NAMES
+    return names.get(value, value)
+
+
+def display_name(value, language="de"):
+    names = DISPLAY_NAMES_EN if language == "en" else DISPLAY_NAMES
+    return names.get(value, value)

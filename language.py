@@ -21,6 +21,7 @@ TEXT = {
         "tab_rgb": "RGB",
         "tab_buttons": "Buttons",
         "tab_info": "Info",
+        "tab_language": "Sprache",
 
         #
         # Allgemein
@@ -29,6 +30,15 @@ TEXT = {
         "save": "Speichern",
         "enable": "Aktivieren",
         "disable": "Deaktivieren",
+        "buttons_save": "Tastenbelegung speichern",
+        "buttons_saved": "Tastenbelegung gespeichert",
+        "language": "Sprache",
+        "language_changed": "Sprache geändert",
+        "device_detected": "Gerät erkannt",
+        "error": "Fehler",
+        "zone_top": "Oben",
+        "zone_middle": "Mitte",
+        "zone_bottom": "Unten",
 
         #
         # Info
@@ -106,6 +116,7 @@ TEXT = {
         "tab_rgb": "RGB",
         "tab_buttons": "Buttons",
         "tab_info": "Info",
+        "tab_language": "Language",
 
         #
         # General
@@ -114,6 +125,15 @@ TEXT = {
         "save": "Save",
         "enable": "Enable",
         "disable": "Disable",
+        "buttons_save": "Save button mapping",
+        "buttons_saved": "Button mapping saved",
+        "language": "Language",
+        "language_changed": "Language changed",
+        "device_detected": "Device detected",
+        "error": "Error",
+        "zone_top": "Top",
+        "zone_middle": "Middle",
+        "zone_bottom": "Bottom",
 
         #
         # Info

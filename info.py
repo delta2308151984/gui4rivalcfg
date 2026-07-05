@@ -3,16 +3,11 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QLabel,
     QPushButton,
-    QFrame,
-    QComboBox
+    QFrame
 )
 
 from rivalcfg_wrapper import RivalCfg
-from language import (
-    tr,
-    set_language,
-    get_language
-)
+from language import tr
 
 class InfoTab(QWidget):
 
@@ -66,32 +61,6 @@ class InfoTab(QWidget):
             self.refresh_button
         )
 
-        self.language_box = QComboBox()
-
-        self.language_box.addItem(
-            "Deutsch",
-            "de"
-        )
-
-        self.language_box.addItem(
-            "English",
-            "en"
-        )
-
-        if get_language() == "en":
-
-            self.language_box.setCurrentIndex(
-                1
-            )
-
-        self.language_box.currentIndexChanged.connect(
-            self.change_language
-        )
-
-        layout.addWidget(
-            self.language_box
-        )
-
         #
         # About
         #
@@ -116,7 +85,7 @@ class InfoTab(QWidget):
 
         layout.addWidget(
             QLabel(
-                "GUI4RivalCfg v1.0"
+                "GUI4RivalCfg v1.1"
             )
         )
 
@@ -154,26 +123,6 @@ class InfoTab(QWidget):
 
         layout.addStretch()
 
-
-
-    def change_language(self):
-
-        lang = (
-            self.language_box
-            .currentData()
-        )
-
-        set_language(
-            lang
-        )
-
-        self.main_window.update_language()
-
-        self.main_window.log(
-            f"[INFO] Sprache geändert: {lang}"
-        )
-
-        self.update_language()
 
 
     def update_language(self):
