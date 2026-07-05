@@ -4,63 +4,68 @@
   <img src="images/logo.png" width="256" alt="GUI4RivalCfg Logo">
 </p>
 
-Grafische Oberfläche für rivalcfg unter Linux.
+A graphical Linux interface for configuring SteelSeries mice with
+[rivalcfg](https://github.com/flozz/rivalcfg).
 
-## Unterstützte Funktionen
+## Features
 
-- DPI-Konfiguration
-- RGB-Konfiguration
-- Reactive-Effekt
-- Rainbow-Effekt
-- RGB deaktivieren
+- DPI configuration
+- RGB configuration
+- Reactive lighting effect
+- Rainbow lighting effect
+- Disable RGB lighting
 - Dim Timer
 - Sleep Timer
-- Button-Mapping
-- Batterieanzeige
-- Deutsche und englische Benutzeroberfläche
+- Button mapping
+- Battery level display
+- English and German user interface
 
 ## Screenshots
 
 | DPI | RGB |
 |-----|-----|
-| ![](images/screenshots/dpi.png) | ![](images/screenshots/rgb.png) |
+| ![DPI configuration](images/screenshots/dpi.png) | ![RGB configuration](images/screenshots/rgb.png) |
 
 | Buttons | Info |
 |----------|------|
-| ![](images/screenshots/buttons.png) | ![](images/screenshots/info.png) |
+| ![Button mapping](images/screenshots/buttons.png) | ![Application information](images/screenshots/info.png) |
 
-## Voraussetzungen
+| Language |
+|----------|
+| ![Language selection](images/screenshots/lang.png) |
 
+## Requirements
+
+- A supported SteelSeries mouse
 - Linux
 - Python 3
-- Python-venv-Unterstützung
+- Python venv support
 
 ## Installation
 
-1. `gui4rivalcfg-1.1.tar.gz` aus dem
-   [v1.1-Release](https://github.com/delta2308151984/gui4rivalcfg/releases/tag/v1.1)
-   herunterladen und entpacken.
-2. Im entpackten Ordner ausführen:
+1. Download and extract `gui4rivalcfg-1.1.tar.gz` from the
+   [v1.1 release](https://github.com/delta2308151984/gui4rivalcfg/releases/tag/v1.1).
+2. Run the installer from the extracted directory:
 
 ```bash
 ./install.sh
 ```
 
-Der Installer richtet Anwendung, Python-Umgebung, Starter und Menüeintrag
-benutzerweit ein. Es sind keine Root-Rechte erforderlich. Anschließend kann
-die Anwendung über das Anwendungsmenü oder im Terminal gestartet werden:
+The installer creates a user-local application directory, Python environment,
+command-line launcher, and desktop menu entry. Root privileges are not
+required. Start the application from the desktop menu or terminal:
 
 ```bash
 gui4rivalcfg
 ```
 
-## Deinstallation
+## Uninstallation
 
 ```bash
 ./uninstall.sh
 ```
 
-## Start aus dem Quellcode
+## Running from source
 
 ```bash
 python3 -m venv .venv
