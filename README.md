@@ -17,6 +17,7 @@ Grafische Oberfläche für rivalcfg unter Linux.
 - Sleep Timer
 - Button-Mapping
 - Batterieanzeige
+- Deutsche und englische Benutzeroberfläche
 
 ## Screenshots
 
@@ -32,11 +33,37 @@ Grafische Oberfläche für rivalcfg unter Linux.
 
 - Linux
 - Python 3
-- rivalcfg
+- Python-venv-Unterstützung
 
 ## Installation
 
+1. `gui4rivalcfg-1.1.tar.gz` aus dem
+   [v1.1-Release](https://github.com/delta2308151984/gui4rivalcfg/releases/tag/v1.1)
+   herunterladen und entpacken.
+2. Im entpackten Ordner ausführen:
+
 ```bash
-git clone https://github.com/delta2308151984/gui4rivalcfg.git
-cd gui4rivalcfg
-python main.py
+./install.sh
+```
+
+Der Installer richtet Anwendung, Python-Umgebung, Starter und Menüeintrag
+benutzerweit ein. Es sind keine Root-Rechte erforderlich. Anschließend kann
+die Anwendung über das Anwendungsmenü oder im Terminal gestartet werden:
+
+```bash
+gui4rivalcfg
+```
+
+## Deinstallation
+
+```bash
+./uninstall.sh
+```
+
+## Start aus dem Quellcode
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python main.py
+```

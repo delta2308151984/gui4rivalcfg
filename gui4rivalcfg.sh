@@ -1,5 +1,7 @@
-#!/bin/bash
+#!/bin/sh
+set -eu
 
-cd "$(dirname "$0")"
+APP_DIR="@APP_DIR@"
+cd "$APP_DIR"
 
-python main.py
+exec "$APP_DIR/.venv/bin/python" main.py

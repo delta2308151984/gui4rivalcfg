@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
 Name=GUI4RivalCfg
-Comment=SteelSeries GUI für rivalcfg
-Exec=/home/DEINNAME/gui4rivalcfg/gui4rivalcfg.sh
-Icon=utilities-terminal
+Comment=SteelSeries mouse configuration with rivalcfg
+Exec=@EXEC@
+Icon=@ICON@
 Terminal=false
 Categories=Utility;
