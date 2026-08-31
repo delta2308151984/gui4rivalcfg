@@ -1,14 +1,24 @@
+import os
+import re
 import shutil
 import subprocess
-import re
+import sys
 
 
 class RivalCfg:
 
     def __init__(self):
 
-        self.binary = shutil.which(
-            "rivalcfg"
+        # The installer puts rivalcfg into the application's virtualenv.
+        # The desktop launcher does not necessarily add that venv's bin
+        # directory to PATH, so checking PATH alone makes a valid install
+        # look as if rivalcfg were missing.
+        venv_binary = os.path.join(
+            os.path.dirname(sys.executable),
+            "rivalcfg",
+        )
+        self.binary = shutil.which("rivalcfg") or (
+            venv_binary if os.path.isfile(venv_binary) else None
         )
 
         if not self.binary:
