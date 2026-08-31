@@ -43,8 +43,10 @@ A graphical Linux interface for configuring SteelSeries mice with
 
 ## Installation
 
-1. Download and extract `gui4rivalcfg-1.1.tar.gz` from the
-   [v1.1 release](https://github.com/delta2308151984/gui4rivalcfg/releases/tag/v1.1).
+1. Open the [latest release](https://github.com/delta2308151984/gui4rivalcfg/releases/latest),
+   download the current `gui4rivalcfg-<version>.tar.gz` asset, and extract it.
+   The version number is intentionally not fixed here, so this instruction
+   remains valid for future releases.
 2. Run the installer from the extracted directory:
 
 ```bash
