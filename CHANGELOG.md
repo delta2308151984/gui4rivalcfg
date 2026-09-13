@@ -2,6 +2,13 @@
 
 All notable changes to GUI4RivalCfg are documented in this file.
 
+## [1.4.3] - 2026-09-13
+
+### Fixed
+
+- Fixed a startup error after an automatic update where the update result was
+  logged before the application's log widget had been created.
+
 ## [1.4.2] - 2026-09-13
 
 ### Changed

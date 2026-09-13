@@ -56,6 +56,13 @@ class MainWindow(QWidget):
 
         layout = QVBoxLayout(self)
 
+        # The information tab can report the result of a completed update
+        # while it is being constructed. Create the log widget first so these
+        # early startup messages always have a valid destination.
+        self.logbox = QTextEdit()
+        self.logbox.setReadOnly(True)
+        self.logbox.setMaximumHeight(120)
+
         #
         # Tabs
         #
@@ -154,16 +161,6 @@ class MainWindow(QWidget):
         #
 
         bottom_row = QHBoxLayout()
-
-        self.logbox = QTextEdit()
-
-        self.logbox.setReadOnly(
-            True
-        )
-
-        self.logbox.setMaximumHeight(
-            120
-        )
 
         bottom_row.addWidget(
             self.logbox,
