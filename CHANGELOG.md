@@ -2,6 +2,14 @@
 
 All notable changes to GUI4RivalCfg are documented in this file.
 
+## [1.4.2] - 2026-09-13
+
+### Changed
+
+- When a newer release is detected during startup, the information tab now
+  opens automatically so the update notice and update button are immediately
+  visible.
+
 ## [1.4.1] - 2026-09-13
 
 ### Fixed

@@ -6,7 +6,7 @@ import re
 import sys
 import tempfile
 
-from PySide6.QtCore import QProcess, QTimer, QUrl
+from PySide6.QtCore import QProcess, QTimer, QUrl, Signal
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkReply, QNetworkRequest
 from PySide6.QtWidgets import (
     QApplication,
@@ -25,6 +25,8 @@ from language import tr
 from version import __version__
 
 class InfoTab(QWidget):
+
+    update_available = Signal()
 
     LATEST_RELEASE_API = (
         "https://api.github.com/repos/"
@@ -322,6 +324,7 @@ class InfoTab(QWidget):
                     f"[UPDATE] {tr('update_log_available')}: "
                     f"{latest_version}"
                 )
+                self.update_available.emit()
             else:
                 self.update_status = "current"
                 self.install_update_button.setVisible(False)

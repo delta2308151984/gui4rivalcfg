@@ -129,6 +129,10 @@ class MainWindow(QWidget):
             self
         )
 
+        self.info_tab.update_available.connect(
+            lambda: self.tabs.setCurrentWidget(self.info_tab)
+        )
+
         self.tabs.addTab(
             self.info_tab,
             tr("tab_info")
