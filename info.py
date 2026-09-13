@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
 
 from rivalcfg_wrapper import RivalCfg
 from language import tr
+from version import __version__
 
 class InfoTab(QWidget):
 
@@ -31,6 +32,7 @@ class InfoTab(QWidget):
 
         self.device_label = QLabel()
         self.version_label = QLabel()
+        self.rivalcfg_version_label = QLabel()
         self.battery_label = QLabel()
 
         layout.addWidget(
@@ -39,6 +41,10 @@ class InfoTab(QWidget):
 
         layout.addWidget(
             self.version_label
+        )
+
+        layout.addWidget(
+            self.rivalcfg_version_label
         )
 
         layout.addWidget(
@@ -85,7 +91,7 @@ class InfoTab(QWidget):
 
         layout.addWidget(
             QLabel(
-                "GUI4RivalCfg v1.1"
+                "GUI4RivalCfg"
             )
         )
 
@@ -146,6 +152,11 @@ class InfoTab(QWidget):
 
         self.version_label.setText(
             f"{tr('version')}: "
+            f"{__version__}"
+        )
+
+        self.rivalcfg_version_label.setText(
+            f"{tr('rivalcfg_version')}: "
             f"{self.device_info['rivalcfg_version']}"
         )
 

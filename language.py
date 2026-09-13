@@ -52,6 +52,7 @@ TEXT = {
         "author": "Autor",
         "github": "GitHub",
         "version": "GUI4RivalCfg Version",
+        "rivalcfg_version": "rivalcfg Version",
 
         #
         # DPI
@@ -149,6 +150,7 @@ TEXT = {
         "author": "Author",
         "github": "GitHub",
         "version": "GUI4RivalCfg Version",
+        "rivalcfg_version": "rivalcfg version",
 
         #
         # DPI

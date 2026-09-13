@@ -20,6 +20,8 @@ A graphical Linux interface for configuring SteelSeries mice with
 - Battery level display
 - English and German user interface
 
+See [CHANGELOG.md](CHANGELOG.md) for release history and compatibility notes.
+
 ## Screenshots
 
 | DPI | RGB |

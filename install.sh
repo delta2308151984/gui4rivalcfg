@@ -17,6 +17,7 @@ mkdir -p "$APP_DIR" "$APP_DIR/images" "$BIN_DIR" "$DESKTOP_DIR"
 
 cp "$SOURCE_DIR"/*.py "$APP_DIR/"
 cp "$SOURCE_DIR/requirements.txt" "$APP_DIR/"
+cp "$SOURCE_DIR/CHANGELOG.md" "$APP_DIR/"
 cp -R "$SOURCE_DIR/images/." "$APP_DIR/images/"
 
 python3 -m venv "$APP_DIR/.venv"
