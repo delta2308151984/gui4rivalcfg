@@ -2,6 +2,18 @@
 
 All notable changes to GUI4RivalCfg are documented in this file.
 
+## [1.3.0] - 2026-09-13
+
+### Added
+
+- The information tab now displays the installed GUI4RivalCfg version.
+- On application startup, the latest GitHub release is checked asynchronously
+  without blocking the user interface.
+- The information tab displays the latest available version and a highlighted
+  download link when an update is available.
+- Failed or unavailable network checks are reported without preventing the
+  application from starting.
+
 ## [1.2.3] - 2026-09-13
 
 ### Fixed

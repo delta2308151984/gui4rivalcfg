@@ -52,6 +52,13 @@ TEXT = {
         "author": "Autor",
         "github": "GitHub",
         "version": "GUI4RivalCfg Version",
+        "installed_version": "Installierte Version",
+        "latest_version": "Neueste Version",
+        "checking_for_updates": "Suche nach neuer Version …",
+        "update_available": "Eine neue Version ist verfügbar.",
+        "open_download": "Download öffnen",
+        "up_to_date": "GUI4RivalCfg ist aktuell.",
+        "update_check_failed": "Versionsprüfung derzeit nicht möglich.",
         "rivalcfg_version": "rivalcfg Version",
 
         #
@@ -150,6 +157,13 @@ TEXT = {
         "author": "Author",
         "github": "GitHub",
         "version": "GUI4RivalCfg Version",
+        "installed_version": "Installed version",
+        "latest_version": "Latest version",
+        "checking_for_updates": "Checking for a new version…",
+        "update_available": "A new version is available.",
+        "open_download": "Open download",
+        "up_to_date": "GUI4RivalCfg is up to date.",
+        "update_check_failed": "Version check is currently unavailable.",
         "rivalcfg_version": "rivalcfg version",
 
         #

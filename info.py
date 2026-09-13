@@ -1,3 +1,8 @@
+import json
+import re
+
+from PySide6.QtCore import QTimer, QUrl
+from PySide6.QtNetwork import QNetworkAccessManager, QNetworkReply, QNetworkRequest
 from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
@@ -12,6 +17,15 @@ from version import __version__
 
 class InfoTab(QWidget):
 
+    LATEST_RELEASE_API = (
+        "https://api.github.com/repos/"
+        "delta2308151984/gui4rivalcfg/releases/latest"
+    )
+    RELEASES_URL = (
+        "https://github.com/delta2308151984/"
+        "gui4rivalcfg/releases/latest"
+    )
+
     def __init__(
         self,
         device_info,
@@ -23,8 +37,12 @@ class InfoTab(QWidget):
         self.main_window = main_window
 
         self.cfg = RivalCfg()
+        self.network_manager = QNetworkAccessManager(self)
+        self.update_reply = None
 
         self.build_ui()
+        self.update_language()
+        QTimer.singleShot(0, self.check_for_update)
 
     def build_ui(self):
 
@@ -32,6 +50,8 @@ class InfoTab(QWidget):
 
         self.device_label = QLabel()
         self.version_label = QLabel()
+        self.latest_version_label = QLabel()
+        self.update_notice_label = QLabel()
         self.rivalcfg_version_label = QLabel()
         self.battery_label = QLabel()
 
@@ -42,6 +62,14 @@ class InfoTab(QWidget):
         layout.addWidget(
             self.version_label
         )
+
+        layout.addWidget(
+            self.latest_version_label
+        )
+
+        self.update_notice_label.setWordWrap(True)
+        self.update_notice_label.setOpenExternalLinks(True)
+        layout.addWidget(self.update_notice_label)
 
         layout.addWidget(
             self.rivalcfg_version_label
@@ -151,9 +179,12 @@ class InfoTab(QWidget):
         )
 
         self.version_label.setText(
-            f"{tr('version')}: "
+            f"{tr('installed_version')}: "
             f"{__version__}"
         )
+
+        if self.update_reply is None and not self.latest_version_label.text():
+            self.latest_version_label.setText(tr("checking_for_updates"))
 
         self.rivalcfg_version_label.setText(
             f"{tr('rivalcfg_version')}: "
@@ -161,6 +192,90 @@ class InfoTab(QWidget):
         )
 
         self.refresh_battery()
+
+    def check_for_update(self):
+
+        self.latest_version_label.setText(
+            tr("checking_for_updates")
+        )
+        self.update_notice_label.clear()
+
+        request = QNetworkRequest(
+            QUrl(self.LATEST_RELEASE_API)
+        )
+        request.setRawHeader(
+            b"User-Agent",
+            f"GUI4RivalCfg/{__version__}".encode("ascii")
+        )
+
+        self.update_reply = self.network_manager.get(request)
+        self.update_reply.finished.connect(
+            self.finish_update_check
+        )
+        QTimer.singleShot(10000, self.abort_update_check)
+
+    def abort_update_check(self):
+
+        if (
+            self.update_reply is not None
+            and self.update_reply.isRunning()
+        ):
+            self.update_reply.abort()
+
+    def finish_update_check(self):
+
+        reply = self.update_reply
+        self.update_reply = None
+
+        if reply is None:
+            return
+
+        try:
+            if reply.error() != QNetworkReply.NetworkError.NoError:
+                raise RuntimeError(reply.errorString())
+
+            payload = json.loads(
+                bytes(reply.readAll()).decode("utf-8")
+            )
+            latest_version = str(
+                payload["tag_name"]
+            ).lstrip("vV")
+
+            self.latest_version_label.setText(
+                f"{tr('latest_version')}: {latest_version}"
+            )
+
+            if self.version_tuple(latest_version) > self.version_tuple(__version__):
+                self.update_notice_label.setText(
+                    '<span style="color: #ffb74d; font-weight: bold;">'
+                    f"{tr('update_available')}</span> "
+                    f'<a href="{self.RELEASES_URL}">'
+                    f"{tr('open_download')}</a>"
+                )
+            else:
+                self.update_notice_label.setText(
+                    '<span style="color: #66bb6a;">'
+                    f"{tr('up_to_date')}</span>"
+                )
+
+        except (KeyError, ValueError, TypeError, RuntimeError, json.JSONDecodeError):
+            self.latest_version_label.setText(
+                tr("update_check_failed")
+            )
+            self.update_notice_label.clear()
+        finally:
+            reply.deleteLater()
+
+    @staticmethod
+    def version_tuple(version):
+
+        match = re.match(
+            r"^(\d+)\.(\d+)\.(\d+)",
+            str(version).lstrip("vV")
+        )
+        if not match:
+            raise ValueError("Ungültige Versionsnummer")
+        return tuple(int(value) for value in match.groups())
 
     def refresh_battery(self):
 
