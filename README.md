@@ -18,6 +18,7 @@ A graphical Linux interface for configuring SteelSeries mice with
 - Sleep Timer
 - Button mapping
 - Battery level display
+- Automatic update checks and one-click updates
 - English and German user interface
 
 See [CHANGELOG.md](CHANGELOG.md) for release history and compatibility notes.
@@ -67,6 +68,14 @@ Start the application from the desktop menu or terminal:
 ```bash
 gui4rivalcfg
 ```
+
+## Updates
+
+GUI4RivalCfg checks the latest GitHub release in the background when it
+starts. If a newer version is available, open the information tab and select
+**Update now**. The application downloads the release archive, verifies its
+SHA-256 digest, installs it, and restarts automatically. Existing settings are
+preserved in `~/.config/gui4rivalcfg`.
 
 ## Uninstallation
 

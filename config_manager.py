@@ -1,14 +1,28 @@
 import json
+import os
+import shutil
 from pathlib import Path
 
 
 class ConfigManager:
 
     def __init__(self):
-
-        self.file = Path(
-            "config.json"
+        config_home = Path(
+            os.environ.get(
+                "XDG_CONFIG_HOME",
+                Path.home() / ".config"
+            )
         )
+        self.directory = config_home / "gui4rivalcfg"
+        self.file = self.directory / "config.json"
+        self.update_result_file = self.directory / "update-result.json"
+
+        # Versions up to 1.3.1 stored config.json in the application folder.
+        # Move a copy to the update-safe XDG configuration directory once.
+        legacy_file = Path.cwd() / "config.json"
+        if not self.file.exists() and legacy_file.is_file():
+            self.directory.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(legacy_file, self.file)
 
     def default_config(self):
 
@@ -151,6 +165,11 @@ class ConfigManager:
         self,
         data
     ):
+
+        self.directory.mkdir(
+            parents=True,
+            exist_ok=True
+        )
 
         with open(
             self.file,

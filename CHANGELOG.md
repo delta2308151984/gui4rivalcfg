@@ -2,6 +2,24 @@
 
 All notable changes to GUI4RivalCfg are documented in this file.
 
+## [1.4.0] - 2026-09-13
+
+### Added
+
+- Added a bilingual automatic updater to the information tab.
+- New releases can be downloaded, SHA-256 verified, installed, and restarted
+  directly from the application.
+- The update button is only shown when a newer release with a verifiable
+  archive is available.
+- Download progress and success or failure messages are shown in the GUI and
+  application log.
+
+### Changed
+
+- User settings are now stored below the XDG configuration directory
+  (`~/.config/gui4rivalcfg` by default) and migrated from the legacy
+  application-folder location so updates preserve them.
+
 ## [1.3.1] - 2026-09-13
 
 ### Changed

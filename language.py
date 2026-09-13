@@ -62,6 +62,14 @@ TEXT = {
         "update_log_current": "GUI4RivalCfg ist aktuell",
         "update_log_available": "Neue GUI4RivalCfg-Version verfügbar",
         "update_log_failed": "Versionsprüfung nicht möglich",
+        "install_update": "Jetzt aktualisieren",
+        "update_title": "GUI4RivalCfg aktualisieren",
+        "update_confirmation": "Version {version} jetzt herunterladen und installieren? Die Anwendung wird anschließend neu gestartet.",
+        "downloading_update": "Update wird heruntergeladen …",
+        "update_installing": "Update wird installiert",
+        "update_download_failed": "Update konnte nicht heruntergeladen oder geprüft werden",
+        "update_successful": "Update auf Version {version} wurde erfolgreich installiert.",
+        "update_failed": "Update auf Version {version} ist fehlgeschlagen. Die bisherige Installation bleibt erhalten.",
         "rivalcfg_version": "rivalcfg Version",
 
         #
@@ -170,6 +178,14 @@ TEXT = {
         "update_log_current": "GUI4RivalCfg is up to date",
         "update_log_available": "New GUI4RivalCfg version available",
         "update_log_failed": "Version check failed",
+        "install_update": "Update now",
+        "update_title": "Update GUI4RivalCfg",
+        "update_confirmation": "Download and install version {version} now? The application will restart afterwards.",
+        "downloading_update": "Downloading update…",
+        "update_installing": "Installing update",
+        "update_download_failed": "The update could not be downloaded or verified",
+        "update_successful": "The update to version {version} was installed successfully.",
+        "update_failed": "The update to version {version} failed. The existing installation remains available.",
         "rivalcfg_version": "rivalcfg version",
 
         #
