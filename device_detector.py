@@ -34,6 +34,7 @@ class DeviceDetector:
         #
 
         mouse_name = None
+        selected_device = None
 
         for device in devices:
 
@@ -43,6 +44,8 @@ class DeviceDetector:
                 mouse in name
                 for mouse in self.SUPPORTED_MICE
             ):
+
+                selected_device = device
 
                 mouse_name = (
                     name
@@ -115,6 +118,12 @@ class DeviceDetector:
 
             "device":
                 mouse_name,
+
+            "vendor_id":
+                selected_device["vid"] if selected_device else None,
+
+            "product_id":
+                selected_device["pid"] if selected_device else None,
 
             "parsed_data":
                 parsed

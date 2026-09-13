@@ -39,6 +39,8 @@ TEXT = {
         "zone_top": "Oben",
         "zone_middle": "Mitte",
         "zone_bottom": "Unten",
+        "zone_logo": "Logo",
+        "zone_main": "Hauptlicht",
 
         #
         # Info
@@ -134,6 +136,8 @@ TEXT = {
         "zone_top": "Top",
         "zone_middle": "Middle",
         "zone_bottom": "Bottom",
+        "zone_logo": "Logo",
+        "zone_main": "Main light",
 
         #
         # Info

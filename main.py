@@ -95,7 +95,8 @@ class MainWindow(QWidget):
                 "effects",
                 {}
             ),
-            self
+            self,
+            self.device_info
         )
 
         self.tabs.addTab(

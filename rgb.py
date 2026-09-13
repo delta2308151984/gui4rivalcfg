@@ -25,21 +25,17 @@ class RgbTab(QWidget):
         self,
         zones,
         effects,
-        main_window
+        main_window,
+        device_info=None
     ):
         super().__init__()
 
         self.main_window = main_window
+        self.device_info = device_info or {}
 
-        self.zones = [
-            zone
-            for zone in [
-                "top",
-                "middle",
-                "bottom"
-            ]
-            if zone in zones
-        ]
+        self.zones = [zone for zone in
+                      ["top", "middle", "bottom", "logo", "main"]
+                      if zone in zones]
 
         self.effects = effects
 
@@ -61,6 +57,16 @@ class RgbTab(QWidget):
             "rgb",
             {}
         )
+
+        # Prefer the values persisted by rivalcfg for the detected device.
+        # The old code only read GUI config.json and therefore showed stale
+        # or white values after changing RGB through another tool.
+        saved_values = self.rivalcfg.get_saved_rgb(
+            self.device_info.get("vendor_id"),
+            self.device_info.get("product_id")
+        )
+        if saved_values:
+            rgb_values = {**rgb_values, **saved_values}
 
         effect_values = config.get(
             "effects",
@@ -920,4 +926,3 @@ class RgbTab(QWidget):
             self.main_window.log(
                 f"[ERROR] {e}"
             )
-

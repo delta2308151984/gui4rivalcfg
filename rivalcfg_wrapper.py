@@ -1,4 +1,5 @@
 import os
+import json
 import re
 import shutil
 import subprocess
@@ -158,67 +159,83 @@ class RivalCfg:
 
         args = []
 
-        if "top" in rgb_values:
-
-            args.extend(
-                [
-                    "--top-color",
-                    rgb_values["top"]
-                ]
-            )
-
-        if "middle" in rgb_values:
-
-            args.extend(
-                [
-                    "--middle-color",
-                    rgb_values["middle"]
-                ]
-            )
-
-        if "bottom" in rgb_values:
-
-            args.extend(
-                [
-                    "--bottom-color",
-                    rgb_values["bottom"]
-                ]
-            )
+        # The option names differ between mouse families.  Rival 3 uses
+        # --strip-*-color, while older devices use --top-color, etc.
+        help_text = self.get_help()
+        option_aliases = {
+            "top": ("--strip-top-color", "--top-color"),
+            "middle": ("--strip-middle-color", "--middle-color"),
+            "bottom": ("--strip-bottom-color", "--bottom-color"),
+            "logo": ("--logo-color", "--color"),
+            "main": ("--color",),
+        }
+        for zone, value in rgb_values.items():
+            for option in option_aliases.get(zone, ()):
+                if option in help_text:
+                    args.extend([option, value])
+                    break
 
         if not args:
             return
 
         return self.run(*args)
 
+    def get_saved_rgb(self, vendor_id, product_id):
+        """Read rivalcfg's last persisted device settings.
+
+        rivalcfg has no read-current-RGB CLI command for these mice.  It does
+        persist the values used for the device in its per-device JSON file;
+        reading that file avoids showing the GUI's unrelated defaults.
+        """
+        if not vendor_id or not product_id:
+            return {}
+        try:
+            from rivalcfg.mouse_settings import get_settings_path
+            path = get_settings_path(int(vendor_id, 16), int(product_id, 16))
+            with open(path, encoding="utf-8") as stream:
+                settings = json.load(stream).get("default", {})
+        except (OSError, ValueError, TypeError, ImportError):
+            return {}
+
+        mapping = {
+            "z1_color": "top",
+            "z2_color": "middle",
+            "z3_color": "bottom",
+            "logo_color": "logo",
+            "color": "main",
+        }
+        result = {}
+        for source, zone in mapping.items():
+            value = settings.get(source)
+            if value:
+                result[zone] = self._color_to_hex(value)
+        return result
+
+    @staticmethod
+    def _color_to_hex(value):
+        try:
+            from rivalcfg.color_helpers import parse_color_string
+            return "%02X%02X%02X" % parse_color_string(str(value))
+        except (ValueError, TypeError, ImportError):
+            return str(value).lstrip("#").upper()
+
     def set_top_color(
         self,
         color
     ):
-
-        return self.run(
-            "--top-color",
-            color
-        )
+        return self.set_rgb({"top": color})
 
     def set_middle_color(
         self,
         color
     ):
-
-        return self.run(
-            "--middle-color",
-            color
-        )
+        return self.set_rgb({"middle": color})
 
     def set_bottom_color(
         self,
         color
     ):
-
-        return self.run(
-            "--bottom-color",
-            color
-        )
+        return self.set_rgb({"bottom": color})
 
     #
     # REACTIVE

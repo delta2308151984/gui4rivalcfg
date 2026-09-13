@@ -41,19 +41,32 @@ class RivalCfgParser:
         }
 
     def parse_rgb_zones(self, help_text):
+        """Return the RGB controls using the names understood by the GUI.
 
+        rivalcfg uses device-specific option names.  In particular, Rival 3
+        calls its three strip zones ``--strip-*-color`` and has a separate
+        ``--logo-color`` option.  The old parser returned strings such as
+        ``strip-top``; the RGB tab then discarded them because it only knew
+        ``top/middle/bottom``.  Keep a stable GUI vocabulary here.
+        """
+        options = set(re.findall(r"--([a-z0-9-]+)-color", help_text, re.IGNORECASE))
         zones = []
 
-        for zone in self.RGB_REGEX.findall(help_text):
+        aliases = {
+            "top": ("strip-top", "top"),
+            "middle": ("strip-middle", "middle"),
+            "bottom": ("strip-bottom", "bottom"),
+            "logo": ("logo",),
+        }
+        for zone, names in aliases.items():
+            if any(name in options for name in names):
+                zones.append(zone)
 
-            zone = zone.lower()
+        # Devices with one generic LED control (e.g. Prime/Rival 100).
+        if "--color" in help_text and not zones:
+            zones.append("main")
 
-            if zone == "reactive":
-                continue
-
-            zones.append(zone)
-
-        return sorted(set(zones))
+        return zones
 
     def parse_effects(self, help_text):
 
