@@ -252,10 +252,18 @@ class InfoTab(QWidget):
                     f'<a href="{self.RELEASES_URL}">'
                     f"{tr('open_download')}</a>"
                 )
+                self.main_window.log(
+                    f"[UPDATE] {tr('update_log_available')}: "
+                    f"{latest_version}"
+                )
             else:
                 self.update_notice_label.setText(
                     '<span style="color: #66bb6a;">'
                     f"{tr('up_to_date')}</span>"
+                )
+                self.main_window.log(
+                    f"[INFO] {tr('update_log_current')}: "
+                    f"{__version__}"
                 )
 
         except (KeyError, ValueError, TypeError, RuntimeError, json.JSONDecodeError):
@@ -263,6 +271,9 @@ class InfoTab(QWidget):
                 tr("update_check_failed")
             )
             self.update_notice_label.clear()
+            self.main_window.log(
+                f"[WARN] {tr('update_log_failed')}"
+            )
         finally:
             reply.deleteLater()
 

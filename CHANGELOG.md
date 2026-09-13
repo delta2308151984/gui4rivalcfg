@@ -2,6 +2,13 @@
 
 All notable changes to GUI4RivalCfg are documented in this file.
 
+## [1.3.1] - 2026-09-13
+
+### Changed
+
+- The startup log now reports whether GUI4RivalCfg is up to date, a newer
+  version is available, or the update check could not be completed.
+
 ## [1.3.0] - 2026-09-13
 
 ### Added

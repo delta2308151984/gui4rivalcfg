@@ -59,6 +59,9 @@ TEXT = {
         "open_download": "Download öffnen",
         "up_to_date": "GUI4RivalCfg ist aktuell.",
         "update_check_failed": "Versionsprüfung derzeit nicht möglich.",
+        "update_log_current": "GUI4RivalCfg ist aktuell",
+        "update_log_available": "Neue GUI4RivalCfg-Version verfügbar",
+        "update_log_failed": "Versionsprüfung nicht möglich",
         "rivalcfg_version": "rivalcfg Version",
 
         #
@@ -164,6 +167,9 @@ TEXT = {
         "open_download": "Open download",
         "up_to_date": "GUI4RivalCfg is up to date.",
         "update_check_failed": "Version check is currently unavailable.",
+        "update_log_current": "GUI4RivalCfg is up to date",
+        "update_log_available": "New GUI4RivalCfg version available",
+        "update_log_failed": "Version check failed",
         "rivalcfg_version": "rivalcfg version",
 
         #
