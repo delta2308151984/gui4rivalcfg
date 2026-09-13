@@ -2,6 +2,17 @@
 
 All notable changes to GUI4RivalCfg are documented in this file.
 
+## [1.2.3] - 2026-09-13
+
+### Fixed
+
+- The installer now checks whether the `rivalcfg` udev rules are installed
+  and current.
+- Missing USB access rules are installed automatically with a one-time
+  administrator confirmation using `sudo` or `pkexec`.
+- The installer tells the user to reconnect an already attached mouse so the
+  new permissions take effect.
+
 ## [1.2.2] - 2026-09-13
 
 ### Fixed

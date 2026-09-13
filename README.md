@@ -42,6 +42,7 @@ See [CHANGELOG.md](CHANGELOG.md) for release history and compatibility notes.
 - Linux
 - Python 3
 - Python venv support
+- `sudo` or `pkexec` for the one-time installation of USB access rules
 
 ## Installation
 
@@ -56,8 +57,12 @@ See [CHANGELOG.md](CHANGELOG.md) for release history and compatibility notes.
 ```
 
 The installer creates a user-local application directory, Python environment,
-command-line launcher, and desktop menu entry. Root privileges are not
-required. Start the application from the desktop menu or terminal:
+command-line launcher, and desktop menu entry. The application itself does not
+run as root. If the required `rivalcfg` udev rules are missing or outdated, the
+installer requests administrator confirmation once to install them. If the
+mouse was already connected, unplug and reconnect it after installation.
+
+Start the application from the desktop menu or terminal:
 
 ```bash
 gui4rivalcfg
