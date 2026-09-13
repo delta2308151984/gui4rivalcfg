@@ -105,11 +105,16 @@ class DeviceDetector:
             self.cfg.get_help()
         )
 
-        parsed = (
-            self.parser.parse_all(
-                help_text
+        try:
+            from rivalcfg.devices import get_profile
+
+            profile = get_profile(
+                int(selected_device["vid"], 16),
+                int(selected_device["pid"], 16)
             )
-        )
+            parsed = self.parser.parse_profile(profile)
+        except (ImportError, KeyError, TypeError, ValueError):
+            parsed = self.parser.parse_all(help_text)
 
         return {
 
