@@ -776,7 +776,7 @@ class RgbTab(QWidget):
         except Exception as e:
 
             self.main_window.log(
-                f"[ERROR] {e}"
+                f"[ERROR] {tr(str(e))}"
             )
 
 
@@ -924,5 +924,5 @@ class RgbTab(QWidget):
         except Exception as e:
 
             self.main_window.log(
-                f"[ERROR] {e}"
+                f"[ERROR] {tr(str(e))}"
             )

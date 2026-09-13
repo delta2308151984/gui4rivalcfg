@@ -2,6 +2,16 @@
 
 All notable changes to GUI4RivalCfg are documented in this file.
 
+## [1.4.1] - 2026-09-13
+
+### Fixed
+
+- RGB disable now uses the color-zone options supported by the connected
+  mouse instead of hard-coded Aerox options.
+- Rival 3 shutdown now includes all three strip zones and the logo zone.
+- Active reactive, rainbow, and lighting effects are stopped where supported,
+  preventing them from turning the LEDs back on immediately.
+
 ## [1.4.0] - 2026-09-13
 
 ### Added

@@ -87,6 +87,7 @@ TEXT = {
         "rgb_saved": "RGB gespeichert",
         "rgb_disable": "RGB deaktivieren",
         "rgb_disabled": "RGB deaktiviert",
+        "rgb_disable_unsupported": "Das angeschlossene Gerät bietet keine unterstützte RGB-Abschaltung",
 
         #
         # Reactive
@@ -203,6 +204,7 @@ TEXT = {
         "rgb_saved": "RGB saved",
         "rgb_disable": "Disable RGB",
         "rgb_disabled": "RGB disabled",
+        "rgb_disable_unsupported": "The connected device does not provide a supported RGB disable function",
 
         #
         # Reactive

@@ -272,30 +272,50 @@ class RivalCfg:
         )
 
     def disable_rainbow(self):
-
-        return self.run(
-            "--top-color",
-            "000000",
-            "--middle-color",
-            "000000",
-            "--bottom-color",
-            "000000"
-        )
+        return self.disable_rgb()
 
     #
     # RGB KOMPLETT AUS
     #
 
     def disable_rgb(self):
+        help_text = self.get_help()
+        args = []
 
-        return self.run(
-            "--top-color",
-            "000000",
-            "--middle-color",
-            "000000",
-            "--bottom-color",
-            "000000"
+        # Add every color zone supported by the detected mouse. Rival 3 uses
+        # three --strip-*-color options and a separate --logo-color option.
+        zone_options = (
+            ("--strip-top-color", "--top-color"),
+            ("--strip-middle-color", "--middle-color"),
+            ("--strip-bottom-color", "--bottom-color"),
+            ("--logo-color",),
+            ("--wheel-color",),
         )
+        for alternatives in zone_options:
+            for option in alternatives:
+                if option in help_text:
+                    args.extend([option, "000000"])
+                    break
+
+        # Mice with one generic LED zone use --color.
+        if not args and "--color" in help_text:
+            args.extend(["--color", "000000"])
+
+        # Stop effects that could immediately light the LEDs again and keep
+        # lighting disabled after reconnecting devices that support it.
+        if "--reactive-color" in help_text:
+            args.extend(["--reactive-color", "off"])
+        if "--light-effect" in help_text:
+            args.extend(["--light-effect", "steady"])
+        if "--default-lighting" in help_text:
+            args.extend(["--default-lighting", "off"])
+
+        if not args:
+            raise RuntimeError(
+                "rgb_disable_unsupported"
+            )
+
+        return self.run(*args)
 
     #
     # DEFAULT LIGHTING
